@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>SSM学习第三天 - 清濑灰二-箱根山岳险天下！</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="SpringMvc中的拦截器和异常处理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSM学习第三天">
+<meta property="og:url" content="http://violetevgaden.github.io/posts/40e036d5.html">
+<meta property="og:site_name" content="清濑灰二-箱根山岳险天下！">
+<meta property="og:description" content="SpringMvc中的拦截器和异常处理">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/image-20210712212249395.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/image-20210712212529863.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/image-20210712212726362.png">
+<meta property="article:published_time" content="2021-07-15T12:46:25.000Z">
+<meta property="article:modified_time" content="2021-07-28T13:22:17.947Z">
+<meta property="article:author" content="VioletEverGarden">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/image-20210712212249395.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
+    <link rel="stylesheet" href="/css/style.css?v=1627702566493">
+    
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1627702566493">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://gitee.com/huzhang-youren/imgupload/raw/master/blog/1627612859777.jpg)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="VioletEverGarden" class="mdui-btn mdui-btn-icon"><img src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/20190709021813_vxmcr.jpg" alt="VioletEverGarden"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="VioletEverGarden">
+            <img src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/20190709021813_vxmcr.jpg" alt="VioletEverGarden" alt="VioletEverGarden">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>Articles</span>11</div>
+        <div><span>Tags</span>7</div>
+        <div><span>Categories</span>1</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://user.qzone.qq.com/1066771757/infocenter" target="_blank" mdui-tooltip="{content: 'QQ'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
+            <i class="nexmoefont icon-QQ"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/353826360" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/VioletEvGaden" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="https://steamcommunity.com/profiles/76561198966949779/" target="_blank" mdui-tooltip="{content: 'steam'}" style="color: rgb(14,71,161);background-color: rgba(14,71,161,.1);">
+            <i class="nexmoefont icon-steam"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Mybatis/" style="font-size: 15px;">Mybatis</a> <a href="/tags/Mybatis-Plus/" style="font-size: 10px;">Mybatis-Plus</a> <a href="/tags/Nosql/" style="font-size: 10px;">Nosql</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 12.5px;">SpringBoot</a>
+    </div>
+    
+  </div>
+
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/后端/">后端</a>
+          <span class="category-list-count">11</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2021 VioletEverGarden
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        <br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a><script data-ad-client="ca-pub-2058306854838448" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </div>
+</div><!-- .nexmoe-drawer -->
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 62.5%;"> 
+              <img data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/20200327002506_R5SrA.thumb.700_0.jpeg" data-sizes="auto" alt="SSM学习第三天" class="lazyload">
+              <h1>SSM学习第三天</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年07月15日</a>
+    <a><i class="nexmoefont icon-areachart"></i>1.8k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 8 分钟</a>
+</div>
+
+      
+
+      <p>SpringMvc中的拦截器和异常处理</p>
+<span id="more"></span>
+
+<h2 id="一、SpringJdbcTemplate基本使用"><a href="#一、SpringJdbcTemplate基本使用" class="headerlink" title="一、SpringJdbcTemplate基本使用"></a>一、SpringJdbcTemplate基本使用</h2><h3 id="1-1-、JdbcTemplate概述"><a href="#1-1-、JdbcTemplate概述" class="headerlink" title="1.1 、JdbcTemplate概述"></a><strong>1.1</strong> 、JdbcTemplate概述</h3><p>它是spring框架中提供的一个对象，是对原始繁琐的Jdbc API对象的简单封装。spring框架为我们提供了很多的操作模板类。例如：操作关系型数据的JdbcTemplate和HibernateTemplate，操作nosql数据库的RedisTemplate，操作消息队列的JmsTemplate等等。</p>
+<h3 id="1-2-、JdbcTemplate开发步骤"><a href="#1-2-、JdbcTemplate开发步骤" class="headerlink" title="1.2 、JdbcTemplate开发步骤"></a><strong>1.2</strong> 、JdbcTemplate开发步骤</h3><p>①导入spring-jdbc和spring-tx坐标</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--导入spring的jdbc坐标--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;<span class="number">5.0</span><span class="number">.5</span>.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!--导入spring的tx坐标--&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-tx&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;<span class="number">5.0</span><span class="number">.5</span>.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>②创建数据库表和实体</p>
+<p>③创建JdbcTemplate对象</p>
+<p>④执行数据库操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1、创建数据源对象</span></span><br><span class="line">ComboPooledDataSource dataSource = <span class="keyword">new</span> ComboPooledDataSource();</span><br><span class="line">dataSource.setDriverClass(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">dataSource.setJdbcUrl(<span class="string">&quot;jdbc:mysql://localhost:3306/test&quot;</span>);</span><br><span class="line">dataSource.setUser(<span class="string">&quot;root&quot;</span>);</span><br><span class="line">dataSource.setPassword(<span class="string">&quot;root&quot;</span>);</span><br><span class="line"><span class="comment">//2、创建JdbcTemplate对象</span></span><br><span class="line">JdbcTemplate jdbcTemplate = <span class="keyword">new</span> JdbcTemplate();</span><br><span class="line"><span class="comment">//3、设置数据源给JdbcTemplate</span></span><br><span class="line">jdbcTemplate.setDataSource(dataSource);</span><br><span class="line"><span class="comment">//4、执行操作</span></span><br><span class="line">jdbcTemplate.update(<span class="string">&quot;insert into account values(?,?)&quot;</span>,<span class="string">&quot;tom&quot;</span>,<span class="number">5000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>我们可以将JdbcTemplate的创建权交给Spring，将数据源DataSource的创建权也交给Spring，在Spring容器内部将数据源DataSource注入到JdbcTemplate模版对象中，配置如下：</p>
+<p>使用配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jdbc.driver=com.mysql.jdbc.Driver</span><br><span class="line">jdbc.url=jdbc:mysql://localhost:3306/test</span><br><span class="line">jdbc.username=root</span><br><span class="line">jdbc.password=root</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--<span class="number">1</span>、加载jdbc.properties--&gt;</span><br><span class="line">   &lt;context:property-placeholder location=<span class="string">&quot;classpath:jdbc.properties&quot;</span>/&gt;</span><br><span class="line"></span><br><span class="line">   &lt;!--<span class="number">2</span>、配置数据源对象--&gt;</span><br><span class="line">   &lt;bean id=<span class="string">&quot;dataSource&quot;</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;</span>&gt;</span><br><span class="line">       &lt;property name=<span class="string">&quot;driverClass&quot;</span> value=<span class="string">&quot;$&#123;jdbc.driver&#125;&quot;</span>/&gt;</span><br><span class="line">       &lt;property name=<span class="string">&quot;jdbcUrl&quot;</span> value=<span class="string">&quot;$&#123;jdbc.url&#125;&quot;</span>/&gt;</span><br><span class="line">       &lt;property name=<span class="string">&quot;user&quot;</span> value=<span class="string">&quot;$&#123;jdbc.username&#125;&quot;</span>/&gt;</span><br><span class="line">       &lt;property name=<span class="string">&quot;password&quot;</span> value=<span class="string">&quot;$&#123;jdbc.password&#125;&quot;</span>/&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br><span class="line">       &lt;!--<span class="number">3</span>、配置JdbcTemplate对象--&gt;</span><br><span class="line">   &lt;bean id=<span class="string">&quot;jdbcTemplate&quot;</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;org.springframework.jdbc.core.JdbcTemplate&quot;</span>&gt;</span><br><span class="line">       &lt;property name=<span class="string">&quot;dataSource&quot;</span> ref=<span class="string">&quot;dataSource&quot;</span>&gt;&lt;/property&gt;</span><br><span class="line">   &lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSpringJdbcTemplate</span><span class="params">()</span> <span class="keyword">throws</span> PropertyVetoException </span>&#123;</span><br><span class="line">    ApplicationContext applicationContext = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line">    JdbcTemplate jdbcTemplate = applicationContext.getBean(JdbcTemplate.class);</span><br><span class="line">    jdbcTemplate.update(<span class="string">&quot;insert into account values(?,?)&quot;</span>,<span class="string">&quot;lucy&quot;</span>,<span class="number">5000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3、JdbcTemplate的常用操作"><a href="#1-3、JdbcTemplate的常用操作" class="headerlink" title="1.3、JdbcTemplate的常用操作"></a>1.3、JdbcTemplate的常用操作</h3><ol>
+<li><p>修改操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringJUnit4ClassRunner.class)</span></span><br><span class="line"><span class="meta">@ContextConfiguration(&quot;classpath:applicationContext.xml&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcTemplateCRUDTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JdbcTemplate jdbcTemplate;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="comment">//测试修改操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUpdate</span><span class="params">()</span></span>&#123;</span><br><span class="line">        jdbcTemplate.update(<span class="string">&quot;update account set money=? where name=?&quot;</span>,<span class="number">1000</span>,<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>删除和查询全部操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDelete</span><span class="params">()</span></span>&#123;</span><br><span class="line">    jdbcTemplate.update(<span class="string">&quot;delete from account where name=?&quot;</span>,<span class="string">&quot;tom&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testQueryAll</span><span class="params">()</span></span>&#123;</span><br><span class="line">    List&lt;Account&gt; accounts = jdbcTemplate.query(<span class="string">&quot;select * from account&quot;</span>, <span class="keyword">new</span> BeanPropertyRowMapper&lt;Account&gt;(Account.class));</span><br><span class="line">    <span class="keyword">for</span> (Account account : accounts) &#123;</span><br><span class="line">        System.out.println(account.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>查询单个数据操作操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="comment">//测试查询单个对象操作</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testQueryOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Account account = jdbcTemplate.queryForObject(<span class="string">&quot;select * from account where name=?&quot;</span>, <span class="keyword">new</span> BeanPropertyRowMapper&lt;Account&gt;(Account.class), <span class="string">&quot;tom&quot;</span>);</span><br><span class="line">    System.out.println(account.getName());</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="comment">//测试查询单个简单数据操作(聚合查询)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testQueryCount</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Long aLong = jdbcTemplate.queryForObject(<span class="string">&quot;select count(*) from account&quot;</span>, Long.class);</span><br><span class="line">    System.out.println(aLong);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="二、SpringMVC拦截器"><a href="#二、SpringMVC拦截器" class="headerlink" title="二、SpringMVC拦截器"></a>二、SpringMVC拦截器</h2><h3 id="1-1-、拦截器（interceptor）的作用"><a href="#1-1-、拦截器（interceptor）的作用" class="headerlink" title="1.1 、拦截器（interceptor）的作用"></a><strong>1.1</strong> 、拦截器（interceptor）的作用</h3><p>Spring MVC 的<strong>拦截器</strong>类似于 Servlet 开发中的过滤器 Filter，用于对处理器进行<strong>预处理</strong>和<strong>后处理</strong>。</p>
+<p>将拦截器按一定的顺序联结成一条链，这条链称为拦截器链（Interceptor Chain）。在访问被拦截的方法或字段时，拦截器链中的拦截器就会按其之前定义的顺序被调用。拦截器也是AOP思想的具体实现</p>
+<h3 id="1-2-、拦截器和过滤器区别"><a href="#1-2-、拦截器和过滤器区别" class="headerlink" title="1.2 、拦截器和过滤器区别"></a><strong>1.2</strong> 、<strong>拦截器和过滤器区别</strong></h3><table>
+<thead>
+<tr>
+<th><strong>区别</strong></th>
+<th><strong>过滤器</strong></th>
+<th><strong>拦截器</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>使用范围</td>
+<td>是 servlet  规范中的一部分，任何  Java  Web 工程都可以使用</td>
+<td>是 SpringMVC 框架自己的，只有使用了  SpringMVC 框架的工程才能用</td>
+</tr>
+<tr>
+<td>拦截范围</td>
+<td>在 url-pattern  中配置了/*之后，可以对所有要访问的资源拦截</td>
+<td>只会拦截访问的控制器方法，如果访问的是  jsp，html,css,image 或者 js 是不会进行拦截的</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-、拦截器是快速入门"><a href="#1-3-、拦截器是快速入门" class="headerlink" title="1.3 、拦截器是快速入门"></a><strong>1.3</strong> 、<strong>拦截器是快速入门</strong></h3><p>自定义拦截器很简单，只有如下三步：</p>
+<p>①创建拦截器类实现HandlerInterceptor接口</p>
+<table>
+<thead>
+<tr>
+<th><strong>方法名</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>preHandle()</td>
+<td>方法将在请求处理之前进行调用，该方法的返回值是布尔值Boolean类型的，当它返回为false  时，表示请求结束，后续的Interceptor  和Controller  都不会再执行；当返回值为true 时就会继续调用下一个Interceptor  的preHandle 方法</td>
+</tr>
+<tr>
+<td>postHandle()</td>
+<td>该方法是在当前请求进行处理之后被调用，前提是preHandle 方法的返回值为true 时才能被调用，且它会在DispatcherServlet 进行视图返回渲染之前被调用，所以我们可以在这个方法中对Controller  处理之后的ModelAndView 对象进行操作</td>
+</tr>
+<tr>
+<td>afterCompletion()</td>
+<td>该方法将在整个请求结束之后，也就是在DispatcherServlet 渲染了对应的视图之后执行，前提是preHandle 方法的返回值为true 时才能被调用</td>
+</tr>
+</tbody></table>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyHandlerInterceptor1</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse </span></span></span><br><span class="line"><span class="params"><span class="function">        response, Object handler)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;preHandle running...&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse </span></span></span><br><span class="line"><span class="params"><span class="function">        response, Object handler, ModelAndView modelAndView)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;postHandle running...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterCompletion</span><span class="params">(HttpServletRequest request, HttpServletResponse </span></span></span><br><span class="line"><span class="params"><span class="function">        response, Object handler, Exception ex)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;afterCompletion running...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>②配置拦截器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--配置拦截器--&gt;</span><br><span class="line">&lt;mvc:interceptors&gt;</span><br><span class="line">    &lt;mvc:interceptor&gt;</span><br><span class="line">          &lt;mvc:mapping path=<span class="string">&quot;/**&quot;</span>/&gt;</span><br><span class="line">          &lt;bean <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;com.itheima.interceptor.MyHandlerInterceptor1&quot;</span>/&gt;</span><br><span class="line">    &lt;/mvc:interceptor&gt;</span><br><span class="line">&lt;/mvc:interceptors&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>③测试拦截器的拦截效果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/quick23&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ModelAndView <span class="title">quickMethod23</span><span class="params">()</span> <span class="keyword">throws</span> IOException, ParseException </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;目标方法执行....&quot;</span>);</span><br><span class="line">    ModelAndView modelAndView = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">    modelAndView.addObject(<span class="string">&quot;name&quot;</span>,<span class="string">&quot;itcast&quot;</span>);</span><br><span class="line">    modelAndView.setViewName(<span class="string">&quot;index&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> modelAndView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/image-20210712212249395.png" alt="image-20210712212249395" class="lazyload"></p>
+<p>如果有多个拦截器，则遵循先配先进，先进后出</p>
+<h2 id="三、SpringMVC异常处理"><a href="#三、SpringMVC异常处理" class="headerlink" title="三、SpringMVC异常处理"></a>三、SpringMVC异常处理</h2><h3 id="1-1-异常处理的思路"><a href="#1-1-异常处理的思路" class="headerlink" title="1.1 异常处理的思路"></a><strong>1.1</strong> <strong>异常处理的思路</strong></h3><p>系统中异常包括两类：<strong>预期异常</strong>和<strong>运行时异常</strong>RuntimeException，前者通过捕获异常从而获取异常信息，后者主要通过规范代码开发、测试等手段减少运行时异常的发生。</p>
+<p>系统的<strong>Dao</strong>、<strong>Service</strong>、<strong>Controller</strong>出现都通过throws Exception向上抛出，最后由SpringMVC前端控制器交由异常处理器进行异常处理，如下图：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/image-20210712212529863.png" alt="image-20210712212529863" class="lazyload"></p>
+<h3 id="1-2-异常处理两种方式"><a href="#1-2-异常处理两种方式" class="headerlink" title="1.2 异常处理两种方式"></a><strong>1.2</strong> <strong>异常处理两种方式</strong></h3><ul>
+<li><p>使用Spring MVC提供的简单异常处理器SimpleMappingExceptionResolver</p>
+</li>
+<li><p>实现Spring的异常处理接口HandlerExceptionResolver 自定义自己的异常处理器</p>
+</li>
+</ul>
+<h3 id="1-3-简单异常处理器SimpleMappingExceptionResolver"><a href="#1-3-简单异常处理器SimpleMappingExceptionResolver" class="headerlink" title="1.3 简单异常处理器SimpleMappingExceptionResolver"></a><strong>1.3</strong> <strong>简单异常处理器</strong>SimpleMappingExceptionResolver</h3><p>SpringMVC已经定义好了该类型转换器，在使用时可以根据项目情况进行相应异常与视图的映射配置</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/image-20210712212726362.png" alt="image-20210712212726362" class="lazyload"></p>
+<h3 id="1-4-自定义异常处理步骤"><a href="#1-4-自定义异常处理步骤" class="headerlink" title="1.4 自定义异常处理步骤"></a><strong>1.4</strong> <strong>自定义异常处理步骤</strong></h3><p>①创建异常处理器类实现HandlerExceptionResolver</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyExceptionResolver</span> <span class="keyword">implements</span> <span class="title">HandlerExceptionResolver</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">resolveException</span><span class="params">(HttpServletRequest request, </span></span></span><br><span class="line"><span class="params"><span class="function">    HttpServletResponse response, Object handler, Exception ex)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//处理异常的代码实现</span></span><br><span class="line">        <span class="comment">//创建ModelAndView对象</span></span><br><span class="line">        ModelAndView modelAndView = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">        modelAndView.setViewName(<span class="string">&quot;exceptionPage&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> modelAndView;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">我们还可以根据通过判断异常类型转入不同的页面</span><br></pre></td></tr></table></figure>
+
+<p>②配置异常处理器</p>
+<bean id="exceptionResolver"  class="com.itheima.exception.MyExceptionResolver"/>
+
+<p>③编写异常页面</p>
+<p>④测试异常跳转</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/quick22&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quickMethod22</span><span class="params">()</span> <span class="keyword">throws</span> IOException, ParseException </span>&#123;</span><br><span class="line">    SimpleDateFormat simpleDateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd&quot;</span>);</span><br><span class="line">    simpleDateFormat.parse(<span class="string">&quot;abcde&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>VioletEverGarden<br>
+        <strong>Link：</strong><a href="http://violetevgaden.github.io/posts/40e036d5.html" title="http:&#x2F;&#x2F;violetevgaden.github.io&#x2F;posts&#x2F;40e036d5.html" target="_blank" rel="noopener">http:&#x2F;&#x2F;violetevgaden.github.io&#x2F;posts&#x2F;40e036d5.html</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Java/" rel="tag">Java</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Spring/" rel="tag">Spring</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '9c68004b717aa2fca18d',
+        clientSecret: '37806f775f54e65c1e1712bbc3bdd474f4016759',
+        id: window.location.pathname,
+        repo: 'VioletEvGaden.github.io',
+        owner: 'VioletEvGaden',
+        admin: 'VioletEvGaden'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81SpringJdbcTemplate%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">一、SpringJdbcTemplate基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E3%80%81JdbcTemplate%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 、JdbcTemplate概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E3%80%81JdbcTemplate%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 、JdbcTemplate开发步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3%E3%80%81JdbcTemplate%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">1.3.</span> <span class="toc-text">1.3、JdbcTemplate的常用操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81SpringMVC%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">二、SpringMVC拦截器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%EF%BC%88interceptor%EF%BC%89%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 、拦截器（interceptor）的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E5%92%8C%E8%BF%87%E6%BB%A4%E5%99%A8%E5%8C%BA%E5%88%AB"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 、拦截器和过滤器区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E6%98%AF%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 、拦截器是快速入门</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81SpringMVC%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">3.</span> <span class="toc-text">三、SpringMVC异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="toc-number">3.1.</span> <span class="toc-text">1.1 异常处理的思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-number">3.2.</span> <span class="toc-text">1.2 异常处理两种方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E7%AE%80%E5%8D%95%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%99%A8SimpleMappingExceptionResolver"><span class="toc-number">3.3.</span> <span class="toc-text">1.3 简单异常处理器SimpleMappingExceptionResolver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.4.</span> <span class="toc-text">1.4 自定义异常处理步骤</span></a></li></ol></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1627702566513"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>
