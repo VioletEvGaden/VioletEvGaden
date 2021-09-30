@@ -838,6 +838,8 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 #nexmoe-header .nexmoe-count div {
   -webkit-box-flex: 1;
@@ -849,6 +851,33 @@ body {
 #nexmoe-header .nexmoe-count div span {
   color: #363636;
   display: block;
+}
+#nexmoe-header .nexmoe-count .nexmoe-count-item {
+  flex: none;
+  width: 60px;
+  padding: 5px 0;
+  background-color: #e67249;
+  transform: rotate(0deg);
+  border-radius: 50%;
+  color: #fff;
+  box-shadow: 0 2px 12px #e67249;
+  position: relative;
+}
+#nexmoe-header .nexmoe-count .nexmoe-count-item .item-radius {
+  position: absolute;
+  left: 5px;
+  top: -3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #e67249;
+}
+#nexmoe-header .nexmoe-count .nexmoe-count-item .item-right {
+  left: auto;
+  right: 5px;
+}
+#nexmoe-header .nexmoe-count .nexmoe-count-item span {
+  color: #fff;
 }
 #nexmoe-header .nexmoe-search input {
   border: none !important;
