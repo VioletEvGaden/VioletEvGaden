@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>swagger-在spring中整合 - 清濑灰二-箱根山岳险天下！</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="swagger的常用api以及在springboot中整合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swagger-在spring中整合">
+<meta property="og:url" content="http://violetevgaden.github.io/posts/e8256115.html">
+<meta property="og:site_name" content="清濑灰二-箱根山岳险天下！">
+<meta property="og:description" content="swagger的常用api以及在springboot中整合">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-12T12:46:25.000Z">
+<meta property="article:modified_time" content="2021-10-12T13:52:49.836Z">
+<meta property="article:author" content="VioletEverGarden">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="swagger">
+<meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
+    <link rel="stylesheet" href="/css/style.css?v=1634046908098">
+    
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1634046908098">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://gitee.com/huzhang-youren/imgupload/raw/master/blog/1627612859777.jpg)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="VioletEverGarden" class="mdui-btn mdui-btn-icon"><img src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/20190709021813_vxmcr.jpg" alt="VioletEverGarden"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="VioletEverGarden">
+            <img src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/20190709021813_vxmcr.jpg" alt="VioletEverGarden" alt="VioletEverGarden">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+         <div class="nexmoe-count-item"><span>文章</span>12 <div class="item-radius"></div><div class="item-radius item-right"></div> </div>
+        <div class="nexmoe-count-item"><span>标签</span>8<div class="item-radius"></div><div class="item-radius item-right"></div></div>
+        <div class="nexmoe-count-item"><span>分类</span>1<div class="item-radius"></div><div class="item-radius item-right"></div></div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="http://wpa.qq.com/msgrd?v=3&uin=1066771757&site=qq&menu=yes" target="_blank" mdui-tooltip="{content: 'QQ'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
+            <i class="nexmoefont icon-QQ"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/353826360" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/VioletEvGaden" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="https://steamcommunity.com/profiles/76561198966949779/" target="_blank" mdui-tooltip="{content: 'steam'}" style="color: rgb(14,71,161);background-color: rgba(14,71,161,.1);">
+            <i class="nexmoefont icon-steam"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Mybatis/" style="font-size: 15px;">Mybatis</a> <a href="/tags/Mybatis-Plus/" style="font-size: 10px;">Mybatis-Plus</a> <a href="/tags/Nosql/" style="font-size: 10px;">Nosql</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 12.5px;">SpringBoot</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a>
+    </div>
+    
+  </div>
+
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/后端/">后端</a>
+          <span class="category-list-count">12</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2021 VioletEverGarden
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/VioletEvGaden" target="_blank">VioletEverGarden</a><br/>
+        
+        <div style="font-size: 12px">
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量  <a id="busuanzi_value_site_pv"></a> 次<br />
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+        
+        
+    </div>
+
+</div><!-- .nexmoe-drawer -->
+
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 41.66666666666667%;"> 
+              <img data-src="img/211012.png" data-sizes="auto" alt="swagger-在spring中整合" class="lazyload">
+              <h1>swagger-在spring中整合</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年10月12日</a>
+    <a><i class="nexmoefont icon-areachart"></i>1.1k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 5 分钟</a>
+</div>
+
+      
+
+      <p>swagger的常用api以及在springboot中整合</p>
+<span id="more"></span>
+
+<h2 id="1-Swagger-介绍"><a href="#1-Swagger-介绍" class="headerlink" title="1. Swagger 介绍"></a>1. Swagger 介绍</h2><p>很多人都以为 <code>Swagger</code> 只是一个接口文档生成框架，其实并不是。 Swagger  是一个围绕着 <code>OpenAPI Specification</code>（OAS，中文也称 OpenAPI规范）构建的一组开源工具。可以帮助你从 API 的设计到 API 文档的输出再到  API 的测试，直至最后的 API 部署等整个 API 的开发周期提供相应的解决方案，是一个庞大的项目。 Swagger  不仅免费，而且开源，不管你是企业用户还是个人玩家，都可以使用 Swagger 提供的方案构建令人惊艳的 <code>REST API</code>。</p>
+<p>Swagger 有几个主要的产品。</p>
+<ul>
+<li><a href="https://link.juejin.cn/?target=http://editor.swagger.io/?_ga=2.112541447.2078165713.1574600445-3923049.1574128700">Swagger Editor</a> – 一个基于浏览器的 Open API 规范编辑器。</li>
+<li><a href="https://link.juejin.cn/?target=https://swagger.io/swagger-ui/">Swagger UI</a> – 一个将 OpenAPI 规范呈现为可交互在线文档的工具。</li>
+<li><a href="https://link.juejin.cn/?target=https://github.com/swagger-api/swagger-codegen">Swagger Codegen</a> – 一个根据 OpenAPI 生成调用代码的工具。</li>
+</ul>
+<p>如果你想了解更多信息，可以访问 Swagger 官方网站 <a href="https://link.juejin.cn/?target=https://swagger.io">swagger.io</a>。</p>
+<h2 id="2-Springfox-介绍"><a href="#2-Springfox-介绍" class="headerlink" title="2. Springfox 介绍"></a>2. Springfox 介绍</h2><p>源于 Java 中 Spring 框架的流行，让一个叫做  Marrty Pitt 的老外有了为 SpringMVC 添加接口描述的想法，因此他创建了一个遵守 OpenAPI 规范（OAS）的项目，取名为 <em>swagger-springmvc</em>，这个项目可以让 Spring 项目自动生成 JSON 格式的 OpenAPI 文档。这个框架也仿照了 Spring 项目的开发习惯，使用注解来进行信息配置。</p>
+<p>后来这个项目发展成为 <code>Springfox</code>，再后来扩展出 <code>springfox-swagger2</code> ，为了让 JSON 格式的 API 文档更好的呈现，又出现了 <code>springfox-swagger-ui</code> 用来展示和测试生成的 OpenAPI 。这里的 springfox-swagger-ui 其实就是上面介绍的 Swagger-ui，只是它被通过 webjar 的方式打包到 jar 包内，并通过 maven 的方式引入进来。</p>
+<p>上面提到了 Springfox-swagger2 也是通过注解进行信息配置的，那么是怎么使用的呢？下面列举常用的一些注解，这些注解在下面的 Springboot 整合 Swagger 中会用到。</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>示例</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@ApiModel</td>
+<td>@ApiModel(value = “用户对象”)</td>
+<td>描述一个实体对象</td>
+</tr>
+<tr>
+<td>@ApiModelProperty</td>
+<td>@ApiModelProperty(value = “用户ID”, required = true, example = “1000”)</td>
+<td>描述属性信息，执行描述，是否必须，给出示例</td>
+</tr>
+<tr>
+<td>@Api</td>
+<td>@Api(value = “用户操作 API(v1)”, tags = “用户操作接口”)</td>
+<td>用在接口类上，为接口类添加描述,表示为swagger资源</td>
+</tr>
+<tr>
+<td>@ApiOperation</td>
+<td>@ApiOperation(value = “新增用户”)</td>
+<td>描述类的一个方法或者说一个接口，表示一个http请求的操作</td>
+</tr>
+<tr>
+<td>@ApiParam</td>
+<td>@ApiParam(name=”参数名”,value = “参数说明”, required = ”是否必填“)</td>
+<td>描述单个参数</td>
+</tr>
+<tr>
+<td>@ApiImplicitParam</td>
+<td>ApiImplicitParam(name=”参数” value=”参数说明” dataType=”数据类型” paramType=”参数类型” example=”举例说明”)</td>
+<td>用于方法表示单独的请求参数</td>
+</tr>
+</tbody></table>
+<p>更多的 Springfox 介绍，可以访问 Springfox 官方网站。</p>
+<p><a target="_blank" rel="noopener" href="http://springfox.github.io/springfox/docs/current/">http://springfox.github.io/springfox/docs/current/</a></p>
+<h2 id="3-在spring中整合"><a href="#3-在spring中整合" class="headerlink" title="3. 在spring中整合"></a>3. 在spring中整合</h2><h3 id="3-1-添加swagger和swagger-ui依赖"><a href="#3-1-添加swagger和swagger-ui依赖" class="headerlink" title="3.1. 添加swagger和swagger-ui依赖"></a>3.1. 添加swagger和swagger-ui依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.8.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-添加swagger配置"><a href="#3-2-添加swagger配置" class="headerlink" title="3.2. 添加swagger配置"></a>3.2. 添加swagger配置</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.knox.aurora.common.swagger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.ApiInfoBuilder;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.PathSelectors;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.RequestHandlerSelectors;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.service.ApiInfo;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.service.Contact;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spi.DocumentationType;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spring.web.plugins.Docket;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.swagger2.annotations.EnableSwagger2;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Swagger</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * 访问地址：http://ip:port/swagger-ui.html</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Knox</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger2</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwaggerConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">webApiConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                <span class="comment">//为当前包下controller生成API文档</span></span><br><span class="line">                .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.knox.aurora.controller&quot;</span>))</span><br><span class="line">                <span class="comment">//扫描接口路径</span></span><br><span class="line">                .paths(PathSelectors.any())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfoBuilder()</span><br><span class="line">                .title(<span class="string">&quot;&quot;</span>)<span class="comment">//标题</span></span><br><span class="line">                .description(<span class="string">&quot;前端联调RESTFul接口&quot;</span>)<span class="comment">//描述</span></span><br><span class="line">                .version(<span class="string">&quot;v1.0&quot;</span>)<span class="comment">//自定义版本</span></span><br><span class="line">                .contact(<span class="keyword">new</span> Contact(<span class="string">&quot;zh&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;zh &lt;1066771757@qq.com&gt;&quot;</span>))<span class="comment">//作者信息</span></span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-在controller层加入api注解"><a href="#3-3-在controller层加入api注解" class="headerlink" title="3.3. 在controller层加入api注解"></a>3.3. 在controller层加入api注解</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/user&quot;)</span></span><br><span class="line"><span class="meta">@Api(tags = &quot;UserController&quot;, description = &quot;账号处理器&quot;)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">@ApiOperation(value = &quot;用户登录&quot;)</span></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/login&quot;, method = RequestMethod.POST)</span></span><br><span class="line">    <span class="keyword">public</span> ApiResult&lt;Map&lt;String, String&gt;&gt; login(<span class="meta">@Valid</span> <span class="meta">@RequestBody</span> LoginDTO dto) &#123;</span><br><span class="line">        String token = iUmsUserService.executeLogin(dto);</span><br><span class="line">        <span class="keyword">if</span> (ObjectUtils.isEmpty(token)) &#123;</span><br><span class="line">            <span class="keyword">return</span> ApiResult.failed(<span class="string">&quot;账号密码错误&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        Map&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line">        map.put(<span class="string">&quot;token&quot;</span>, token);</span><br><span class="line">        <span class="keyword">return</span> ApiResult.success(map, <span class="string">&quot;登录成功&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-查看生产的api文档"><a href="#3-4-查看生产的api文档" class="headerlink" title="3.4. 查看生产的api文档"></a>3.4. 查看生产的api文档</h3><p>上面操作完成后启动项目，访问<a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui.html%EF%BC%8C%E7%AB%AF%E5%8F%A3%E5%8F%B7%E4%B8%BA%E8%87%AA%E5%B7%B1%E5%AE%9A%E4%B9%89%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7%E3%80%82">http://localhost:8080/swagger-ui.html，端口号为自己定义的端口号。</a></p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>VioletEverGarden<br>
+        <strong>Link：</strong><a href="http://violetevgaden.github.io/posts/e8256115.html" title="http:&#x2F;&#x2F;violetevgaden.github.io&#x2F;posts&#x2F;e8256115.html" target="_blank" rel="noopener">http:&#x2F;&#x2F;violetevgaden.github.io&#x2F;posts&#x2F;e8256115.html</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Java/" rel="tag">Java</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/swagger/" rel="tag">swagger</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '9c68004b717aa2fca18d',
+        clientSecret: '37806f775f54e65c1e1712bbc3bdd474f4016759',
+        id: window.location.pathname,
+        repo: 'VioletEvGaden.github.io',
+        owner: 'VioletEvGaden',
+        admin: 'VioletEvGaden'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Swagger-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">1. Swagger 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Springfox-%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.</span> <span class="toc-text">2. Springfox 介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%9C%A8spring%E4%B8%AD%E6%95%B4%E5%90%88"><span class="toc-number">3.</span> <span class="toc-text">3. 在spring中整合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%B7%BB%E5%8A%A0swagger%E5%92%8Cswagger-ui%E4%BE%9D%E8%B5%96"><span class="toc-number">3.1.</span> <span class="toc-text">3.1. 添加swagger和swagger-ui依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%B7%BB%E5%8A%A0swagger%E9%85%8D%E7%BD%AE"><span class="toc-number">3.2.</span> <span class="toc-text">3.2. 添加swagger配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%9C%A8controller%E5%B1%82%E5%8A%A0%E5%85%A5api%E6%B3%A8%E8%A7%A3"><span class="toc-number">3.3.</span> <span class="toc-text">3.3. 在controller层加入api注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%9F%A5%E7%9C%8B%E7%94%9F%E4%BA%A7%E7%9A%84api%E6%96%87%E6%A1%A3"><span class="toc-number">3.4.</span> <span class="toc-text">3.4. 查看生产的api文档</span></a></li></ol></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1634046908112"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>
