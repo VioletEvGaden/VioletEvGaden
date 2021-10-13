@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    
+    <title>SpringSecurity的使用 - 清濑灰二-箱根山岳险天下！</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    
+    
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <meta name="description" content="springsecurity的一些常用方法和在springboot中整合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringSecurity的使用">
+<meta property="og:url" content="http://violetevgaden.github.io/posts/98c0a732.html">
+<meta property="og:site_name" content="清濑灰二-箱根山岳险天下！">
+<meta property="og:description" content="springsecurity的一些常用方法和在springboot中整合">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210906203243896.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210906213839543.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210906213927194.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907105002445.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907163716883.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907164437949.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907164555496.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907170931516.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210908190551312.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210908191430170.png">
+<meta property="og:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210908191638916.png">
+<meta property="article:published_time" content="2021-09-16T06:25:50.000Z">
+<meta property="article:modified_time" content="2021-10-13T06:30:32.800Z">
+<meta property="article:author" content="VioletEverGarden">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="spring security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210906203243896.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
+    <link rel="stylesheet" href="/css/style.css?v=1634106732535">
+    
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1634106732535">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="mdui-drawer-body-left">
+    
+    <div id="nexmoe-background">
+        <div class="nexmoe-bg" style="background-image: url(https://gitee.com/huzhang-youren/imgupload/raw/master/blog/1627612859777.jpg)"></div>
+        <div class="mdui-appbar mdui-shadow-0">
+            <div class="mdui-toolbar">
+                <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+                <div class="mdui-toolbar-spacer"></div>
+                <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+                <a href="/" title="VioletEverGarden" class="mdui-btn mdui-btn-icon"><img src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/20190709021813_vxmcr.jpg" alt="VioletEverGarden"></a>
+            </div>
+        </div>
+    </div>
+    <div id="nexmoe-header">
+        <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="VioletEverGarden">
+            <img src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/20190709021813_vxmcr.jpg" alt="VioletEverGarden" alt="VioletEverGarden">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+         <div class="nexmoe-count-item"><span>文章</span>14 <div class="item-radius"></div><div class="item-radius item-right"></div> </div>
+        <div class="nexmoe-count-item"><span>标签</span>9<div class="item-radius"></div><div class="item-radius item-right"></div></div>
+        <div class="nexmoe-count-item"><span>分类</span>1<div class="item-radius"></div><div class="item-radius item-right"></div></div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="文章归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                文章归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:nexmoe.com" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+            </form>
+         
+    </div>
+</div>
+    
+    <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="http://wpa.qq.com/msgrd?v=3&uin=1066771757&site=qq&menu=yes" target="_blank" mdui-tooltip="{content: 'QQ'}" style="color: rgb(249, 174, 8);background-color: rgba(249, 174, 8, .1);">
+            <i class="nexmoefont icon-QQ"></i>
+        </a><a class="mdui-ripple" href="https://space.bilibili.com/353826360" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/VioletEvGaden" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a><a class="mdui-ripple" href="https://steamcommunity.com/profiles/76561198966949779/" target="_blank" mdui-tooltip="{content: 'steam'}" style="color: rgb(14,71,161);background-color: rgba(14,71,161,.1);">
+            <i class="nexmoefont icon-steam"></i>
+        </a>
+    </div>
+</div>
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Mybatis/" style="font-size: 15px;">Mybatis</a> <a href="/tags/Mybatis-Plus/" style="font-size: 10px;">Mybatis-Plus</a> <a href="/tags/Nosql/" style="font-size: 10px;">Nosql</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 12.5px;">SpringBoot</a> <a href="/tags/spring-security/" style="font-size: 12.5px;">spring security</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a>
+    </div>
+    
+  </div>
+
+    
+    
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">Categories</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/后端/">后端</a>
+          <span class="category-list-count">14</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2021 VioletEverGarden
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/VioletEvGaden" target="_blank">VioletEverGarden</a><br/>
+        
+        <div style="font-size: 12px">
+            <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+            本站总访问量  <a id="busuanzi_value_site_pv"></a> 次<br />
+            本站访客数<a id="busuanzi_value_site_uv"></a>人次
+        </div>
+        
+        
+    </div>
+
+</div><!-- .nexmoe-drawer -->
+
+    </div>
+    <div id="nexmoe-content">
+        <div class="nexmoe-primary">
+            <div class="nexmoe-post">
+
+  <article>
+      
+          <div class="nexmoe-post-cover" style="padding-bottom: 41.66666666666667%;"> 
+              <img data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/210916.png" data-sizes="auto" alt="SpringSecurity的使用" class="lazyload">
+              <h1>SpringSecurity的使用</h1>
+          </div>
+      
+      
+      <div class="nexmoe-post-meta nexmoe-rainbow" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年09月16日</a>
+    <a><i class="nexmoefont icon-areachart"></i>6.9k 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 31 分钟</a>
+</div>
+
+      
+
+      <p>springsecurity的一些常用方法和在springboot中整合</p>
+<span id="more"></span>
+
+<p><strong>学习目标</strong></p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210906203243896.png" alt="image-20210906203243896" class="lazyload"></p>
+<h2 id="SpringSecruity简介"><a href="#SpringSecruity简介" class="headerlink" title="SpringSecruity简介"></a>SpringSecruity简介</h2><p><strong>安全框架概述</strong> </p>
+<p>什么是安全框架？ 解决系统安全问题的框架。如果没有安全框架，我们需要手动处理每个资源的访问 控制，非常麻烦。使用安全框架，我们可以通过配置的方式实现对资源的访问限制。 </p>
+<p><strong>常用安全框架</strong> </p>
+<ul>
+<li>Spring Security：Spring家族一员。是一个能够为基于Spring的企业应用系统提供声明式的安全访 问控制解决方案的安全框架。它提供了一组可以在Spring应用上下文中配置的Bean，充分利用了 Spring IoC ， DI（控制反转Inversion of Control,DI:Dependency Injection 依赖注入） 和 AOP（面向切面编程） 功能，为应用系统提供声明式的安全访问控制功能，减少了为企业系统安 全控制编写大量重复代码的工作。</li>
+<li> Apache Shiro：一个功能强大且易于使用的Java安全框架,提供了认证,授权,加密,和会话管理。 Spring Security简介 概述 Spring Security是一个高度自定义的安全框架。利用 Spring IoC/DI和AOP功能，为系统提供了声明 式安全访问控制功能，减少了为系统安全而编写大量重复代码的工作。使用 Spring Secruity 的原因有 很多，但大部分都是发现了 javaEE的 Servlet 规范或 EJB 规范中的安全功能缺乏典型企业应用场景。同 时认识到他们在 WAR 或 EAR 级别无法移植。因此如果你更换服务器环境，还有大量工作去重新配置你 的应用程序。使用 Spring Security解决了这些问题，也为你提供许多其他有用的、可定制的安全功能。 正如你可能知道的两个应用程序的两个主要区域是“认证”和“授权”（或者访问控制）。这两点也是 Spring Security 重要核心功能。“认证”，是建立一个他声明的主体的过程（一个“主体”一般是指用户， 设备或一些可以在你的应用程序中执行动作的其他系统），通俗点说就是系统认为用户是否能登录。 “授权”指确定一个主体是否允许在你的应用程序执行一个动作的过程。通俗点讲就是系统判断用户是否 有权限去做某些事情。 </li>
+</ul>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h3><p>Spring Security是一个高度自定义的安全框架。利用 Spring IoC/DI和AOP功能，为系统提供了声明 式安全访问控制功能，减少了为系统安全而编写大量重复代码的工作。使用 Spring Secruity 的原因有 很多，但大部分都是发现了 javaEE的 Servlet 规范或 EJB 规范中的安全功能缺乏典型企业应用场景。同 时认识到他们在 WAR 或 EAR 级别无法移植。因此如果你更换服务器环境，还有大量工作去重新配置你 的应用程序。使用 Spring Security解决了这些问题，也为你提供许多其他有用的、可定制的安全功能。 正如你可能知道的两个应用程序的两个主要区域是“认证”和“授权”（或者访问控制）。这两点也是 Spring Security 重要核心功能。“认证”，是建立一个他声明的主体的过程（一个“主体”一般是指用户， 设备或一些可以在你的应用程序中执行动作的其他系统），通俗点说就是系统认为用户是否能登录。 “授权”指确定一个主体是否允许在你的应用程序执行一个动作的过程。通俗点讲就是系统判断用户是否 有权限去做某些事情。</p>
+<p> <strong>其核心就是一组过滤器链，项目启动后将会自动配置。最核心的就是 Basic Authentication Filter 用来认证用户的身份，一个在spring security中一种过滤器处理一种认证方式。</strong></p>
+<h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><h3 id="导入依赖"><a href="#导入依赖" class="headerlink" title="导入依赖"></a><strong>导入依赖</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">         &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">         &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;</span><br><span class="line">         &lt;artifactId&gt;spring-security-test&lt;/artifactId&gt;</span><br><span class="line">         &lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="编写前端页面login-html"><a href="#编写前端页面login-html" class="headerlink" title="编写前端页面login.html"></a><strong>编写前端页面login.html</strong></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/login&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">   用户名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">   密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> /&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;登录&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="访问页面"><a href="#访问页面" class="headerlink" title="访问页面"></a><strong>访问页面</strong></h3><p>导入spring-boot-starter-security 启动器后，Spring Security 已经生效，默认拦截全部请求，如果用 户没有登录，跳转到内置登录页面。</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210906213839543.png" alt="image-20210906213839543" class="lazyload"></p>
+<p>默认的用户名为user,密码在控制台中<img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210906213927194.png" alt="image-20210906213927194" class="lazyload"></p>
+<p>登陆后即可访问login.html和main.html</p>
+<h2 id="UserDetailsService详解"><a href="#UserDetailsService详解" class="headerlink" title="UserDetailsService详解"></a>UserDetailsService详解</h2><p>当什么也没有配置的时候，账号和密码是由 Spring Security 定义生成的。而在实际项目中账号和密码都是从数据库中查询出来的。所以我们要通过自定义逻辑控制认证逻辑。如果需要自定义逻辑时，只需要实现 UserDetailsService 接口即可。接口定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDetailsService</span> </span>&#123;</span><br><span class="line">    <span class="function">UserDetails <span class="title">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>返回值 UserDetails 是一个接口，定义如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDetails</span> <span class="keyword">extends</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    Collection&lt;? extends GrantedAuthority&gt; getAuthorities();<span class="comment">//获取所有权限</span></span><br><span class="line">    <span class="function">String <span class="title">getPassword</span><span class="params">()</span></span>;<span class="comment">//获取密码</span></span><br><span class="line">    <span class="function">String <span class="title">getUsername</span><span class="params">()</span></span>;<span class="comment">//获取用户名</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isAccountNonExpired</span><span class="params">()</span></span>;<span class="comment">//账号是否过期</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isAccountNonLocked</span><span class="params">()</span></span>;<span class="comment">//账号是否被锁定</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isCredentialsNonExpired</span><span class="params">()</span></span>;<span class="comment">//凭证是否过期</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">isEnabled</span><span class="params">()</span></span>;<span class="comment">//是否可用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要想返回 UserDetails 的实例就只能返回接口的实现类。SpringSecurity 中提供了如下的实例。我们只需要使用里面的 User 类即可。</p>
+<p>注意 User 的全限定路径是： org.springframework.security.core.userdetails.User此处经常和系统中自己开发的 User 类弄混。</p>
+<p> 在 User 类中提供了很多方法和属性。 其中构造方法有两个，调用其中任何一个都可以实例化 </p>
+<p>UserDetails 实现类 User 类的实例。而三个参数的构造方法实际上也是调用 7 个参数的构造方法。 </p>
+<ul>
+<li>username :用户名 </li>
+<li>password :密码 </li>
+<li>authorities ：用户具有的权限。此处不允许为 null </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String username, String password,</span></span></span><br><span class="line"><span class="params"><span class="function">			Collection&lt;? extends GrantedAuthority&gt; authorities)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>(username, password, <span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">true</span>, authorities);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>此处的用户名应该是客户端传递过来的用户名。而密码应该是从数据库中查询出来的密码。Spring Security 会根据 User 中的 password 和客户端传递过来的 password 进行比较。如果相同则表示认证 通过，如果不相同表示认证失败。</p>
+<p>Authorities 里面的权限对于后面学习授权是很有必要的，包含的所有内容为此用户具有的权限， 如有里面没有包含某个权限，而在做某个事情时必须包含某个权限则会出现 403。通常都是通过 AuthorityUtils.commaSeparatedStringToAuthorityList(“”) 来创建 authorities 集合对象 的。参数是一个字符串，多个权限使用逗号分隔。 </p>
+<h3 id="方法参数"><a href="#方法参数" class="headerlink" title="方法参数"></a>方法参数</h3><p>方法参数表示用户名。此值是客户端表单传递过来的数据。默认情况下必须叫 username ，否则无法接收。 </p>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p> UsernameNotFoundException 用户名没有发现异常。在 loadUserByUsername 中是需要通过自己的 逻辑从数据库中取值的。如果通过用户名没有查询到对应的数据，应该抛出 UsernameNotFoundException ，系统就知道用户名没有查询到。 </p>
+<h2 id="PasswordEncoder-密码解析器详解"><a href="#PasswordEncoder-密码解析器详解" class="headerlink" title="PasswordEncoder 密码解析器详解"></a>PasswordEncoder 密码解析器详解</h2><p>Spring Security 要求容器中必须有 PasswordEncoder 实例。所以当自定义登录逻辑时要求必须给容 器注入 PaswordEncoder 的bean对象。 </p>
+<h3 id="接口介绍"><a href="#接口介绍" class="headerlink" title="接口介绍"></a>接口介绍</h3><ul>
+<li>encode() ：把参数按照特定的解析规则进行解析。 </li>
+<li>matches() ：验证从存储中获取的编码密码与编码后提交的原始密码是否匹配。如果密码匹配， 则返回 true；如果不匹配，则返回 false。第一个参数表示需要被解析的密码。第二个参数表示存 储的密码。 </li>
+<li>upgradeEncoding() ：如果解析的密码能够再次进行解析且达到更安全的结果则返回 true，否则 返回 false。默认返回 false。 </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">PasswordEncoder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 编码原始密码。通常，良好的编码算法将SHA-1或更大的哈希值与8字节或更大的随机生成的盐结合使用</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function">String <span class="title">encode</span><span class="params">(CharSequence rawPassword)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 验证从存储中获取的编码密码，也对提交的原始密码进行编码。如果密码匹配，则返回true；否则，返回false。存储的      * 密码本身不会被解码。</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">matches</span><span class="params">(CharSequence rawPassword, String encodedPassword)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 如果需要再次对编码后的密码进行编码以提高安全性，则返回true，否则返回false。默认实现始终返回false</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">default</span> <span class="keyword">boolean</span> <span class="title">upgradeEncoding</span><span class="params">(String encodedPassword)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="内置解析器介绍"><a href="#内置解析器介绍" class="headerlink" title="内置解析器介绍"></a>内置解析器介绍</h3><p>在 Spring Security 中内置了很多解析器。</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907105002445.png" alt="image-20210907105002445" class="lazyload"></p>
+<h3 id="BCryptPasswordEncoder-简介"><a href="#BCryptPasswordEncoder-简介" class="headerlink" title="BCryptPasswordEncoder 简介"></a>BCryptPasswordEncoder 简介</h3><p>BCryptPasswordEncoder 是 Spring Security 官方推荐的密码解析器，平时多使用这个解析器。</p>
+<p>BCryptPasswordEncoder是对 bcrypt 强散列方法的具体实现。是基于Hash算法实现的单向加密。 可以通过strength控制加密强度，默认 10,长度越长安全性越高。</p>
+<p>Bcrypt 有两个特点：</p>
+<ul>
+<li>每一次 HASH 出来的值不一样</li>
+<li>计算非常缓慢</li>
+</ul>
+<p>因此使用 Bcrypt 进行加密后，攻击者破解密码成本变得不可接受，但代价是应用自身也会性能受到影响，不过登录行为并不是随时在发生，因此能够忍受。</p>
+<p><strong>代码演示</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringsecurityDemoApplicationTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		PasswordEncoder pw = <span class="keyword">new</span> BCryptPasswordEncoder();</span><br><span class="line">		<span class="comment">//加密</span></span><br><span class="line">		String encode = pw.encode(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">		System.out.println(encode);</span><br><span class="line">		<span class="comment">//比较密码</span></span><br><span class="line">		<span class="keyword">boolean</span> matches = pw.matches(<span class="string">&quot;123&quot;</span>, encode);</span><br><span class="line">		System.out.println(<span class="string">&quot;=========================&quot;</span>);</span><br><span class="line">		System.out.println(matches);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，Spring Security要求：当进行自定义登录逻辑时容器内必须有PasswordEncoder实例。所以需要编写一个配置类，将密码解析器先注入进去：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> PasswordEncoder <span class="title">getPw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> BCryptPasswordEncoder();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义登录"><a href="#自定义登录" class="headerlink" title="自定义登录"></a>自定义登录</h2><p>当进行自定义登录逻辑时需要用到之前讲解的UserDetailsService和PasswordEncoder 。</p>
+<h3 id="自定义逻辑"><a href="#自定义逻辑" class="headerlink" title="自定义逻辑"></a><strong>自定义逻辑</strong></h3><p>在 Spring Security 中实现 UserDetailService 就表示为用户详情服务。在这个类中编写用户认证逻辑。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.springsecurity.demo.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.authority.AuthorityUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.User;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetailsService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UsernameNotFoundException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.crypto.password.PasswordEncoder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zhnag</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.0.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDetailServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserDetailsService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> PasswordEncoder passwordEncoder;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> UserDetails <span class="title">loadUserByUsername</span><span class="params">(String username)</span> <span class="keyword">throws</span> UsernameNotFoundException </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;执行自定义登录逻辑&quot;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//1.根据用户名去数据库查询，如果不存在抛UsernameNotFoundException异常</span></span><br><span class="line">		<span class="keyword">if</span> (!<span class="string">&quot;admin&quot;</span>.equals(username))&#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> UsernameNotFoundException(<span class="string">&quot;用户名不存在&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//2.比较密码（注册时已经加密过），如果匹配成功返回UserDetails</span></span><br><span class="line">		String password = passwordEncoder.encode(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> User(username,password, AuthorityUtils.commaSeparatedStringToAuthorityList(<span class="string">&quot;admin,normal&quot;</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在实际操作中我们是通过查询数据库获取用户名和密码</p>
+<p>本文简单说明即把admin和123当作是数据库查询出的密码</p>
+<h3 id="自定义登录页面"><a href="#自定义登录页面" class="headerlink" title="自定义登录页面"></a>自定义登录页面</h3><p>虽然 Spring Security 给我们提供了登录页面，但是对于实际项目中，大多喜欢使用自己的登录页 面。所以 Spring Security 中不仅仅提供了登录页面，还支持用户自定义登录页面。实现过程也比较简 单，只需要修改配置类即可。</p>
+<p><strong>编写登录页面</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;/login&quot;</span> <span class="attr">method</span>=<span class="string">&quot;post&quot;</span>&gt;</span></span><br><span class="line">    用户名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;username123&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">name</span>=<span class="string">&quot;password123&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    记住我：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">name</span>=<span class="string">&quot;remember-me&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;登录&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>修改配置类</strong></p>
+<p>修改配置类中主要是设置哪个页面是登录页面。配置类需要继承WebSecurityConfigurerAdapte,并重 写 configure 方法。 </p>
+<ul>
+<li>successForwardUrl() ：登录成功后跳转地址 </li>
+<li>loginPage() ：登录页面</li>
+<li>loginProcessingUrl ：登录页面表单提交地址，此地址可以不真实存在。 </li>
+<li>antMatchers() ：匹配内容 </li>
+<li>permitAll() ：允许</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecurityConfig</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      <span class="comment">//表单提交</span></span><br><span class="line">      http.formLogin()</span><br><span class="line">            <span class="comment">//自定义登录页面</span></span><br><span class="line">           .loginPage(<span class="string">&quot;/login.html&quot;</span>)</span><br><span class="line">            <span class="comment">//当发现/login时认为是登录，必须和表单提交的地址一样。去执行UserServiceImpl</span></span><br><span class="line">           .loginProcessingUrl(<span class="string">&quot;/login&quot;</span>)</span><br><span class="line">            <span class="comment">//登录成功后跳转页面，POST请求</span></span><br><span class="line">           .successForwardUrl(<span class="string">&quot;/toMain&quot;</span>);</span><br><span class="line">      http.authorizeRequests()</span><br><span class="line">            <span class="comment">//login.html不需要被认证</span></span><br><span class="line">           .antMatchers(<span class="string">&quot;/login.html&quot;</span>).permitAll()</span><br><span class="line">            <span class="comment">//所有请求都必须被认证，必须登录后被访问</span></span><br><span class="line">           .anyRequest().authenticated();</span><br><span class="line">      <span class="comment">//关闭csrf防护</span></span><br><span class="line">       http.csrf().disable();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>编写控制器</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginController</span> </span>&#123;</span><br><span class="line">   <span class="comment">//该方法不执行</span></span><br><span class="line">   <span class="comment">// @RequestMapping(&quot;/login&quot;)</span></span><br><span class="line">   <span class="comment">// public String login()&#123;</span></span><br><span class="line">   <span class="comment">//     System.out.println(&quot;登录方法&quot;);</span></span><br><span class="line">   <span class="comment">//     return &quot;main.html&quot;;</span></span><br><span class="line">   <span class="comment">// &#125;</span></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 成功后跳转页面</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@RequestMapping(&quot;/toMain&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">toMain</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&quot;redirect:/main.html&quot;</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="认证过程其他常用配置"><a href="#认证过程其他常用配置" class="headerlink" title="认证过程其他常用配置"></a>认证过程其他常用配置</h3><p><strong>失败跳转</strong></p>
+<p>表单处理中成功会跳转到一个地址，失败也可以跳转到一个地址</p>
+<p><strong>编写页面error.html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">操作失败，请重新登录 <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>= <span class="string">&quot;/login.html&quot;</span>&gt;</span>跳转<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>修改表单配置</strong></p>
+<p>在配置方法中表单认证部分添加 failureForwardUrl() 方法，表示登录失败跳转的 url。此处依然是POST 请求，所以跳转到可以接收 POST请求的控制器/error中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//表单提交</span></span><br><span class="line">http.formLogin()</span><br><span class="line">      <span class="comment">//自定义登录页面</span></span><br><span class="line">     .loginPage(<span class="string">&quot;/login.html&quot;</span>)</span><br><span class="line">      <span class="comment">//当发现/login时认为是登录，必须和表单提交的地址一样。去执行UserServiceImpl</span></span><br><span class="line">     .loginProcessingUrl(<span class="string">&quot;/login&quot;</span>)</span><br><span class="line">      <span class="comment">//登录成功后跳转页面，POST请求</span></span><br><span class="line">     .successForwardUrl(<span class="string">&quot;/toMain&quot;</span>)</span><br><span class="line">      <span class="comment">//登录失败后跳转页面，POST请求</span></span><br><span class="line">     .failureForwardUrl(<span class="string">&quot;/toError&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>添加控制器的方法</strong></p>
+<p>在控制器类中添加控制器方法，方法映射路径/error。此处要注意：由于是 POST 请求访问/error。所以如果返回值直接转发到 error.html 中，即使有效果，控制台也会报警告，提示 error.html 不支持POST 访问方式。</p>
+<h3 id="设置请求账户和密码的参数名"><a href="#设置请求账户和密码的参数名" class="headerlink" title="设置请求账户和密码的参数名"></a>设置请求账户和密码的参数名</h3><p><strong>源码简介</strong> </p>
+<p>当进行登录时会执行 UsernamePasswordAuthenticationFilter 过滤器。 </p>
+<ul>
+<li>usernamePasrameter ：账户参数名 </li>
+<li>passwordParameter ：密码参数名 </li>
+<li>postOnly=true ：默认情况下只允许POST请求。</li>
+</ul>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907163716883.png" alt="image-20210907163716883" class="lazyload"></p>
+<p>所以我们可以设置参数来改变默认的名字</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//表单提交</span></span><br><span class="line">http.formLogin()</span><br><span class="line">      <span class="comment">//自定义登录页面</span></span><br><span class="line">     .loginPage(<span class="string">&quot;/login.html&quot;</span>)</span><br><span class="line">      <span class="comment">//当发现/login时认为是登录，必须和表单提交的地址一样。去执行UserServiceImpl</span></span><br><span class="line">     .loginProcessingUrl(<span class="string">&quot;/login&quot;</span>)</span><br><span class="line">      <span class="comment">//登录成功后跳转页面，POST请求</span></span><br><span class="line">     .successForwardUrl(<span class="string">&quot;/toMain&quot;</span>)</span><br><span class="line">      <span class="comment">//登录失败后跳转页面，POST请求</span></span><br><span class="line">     .failureForwardUrl(<span class="string">&quot;/toError&quot;</span>)</span><br><span class="line">     .usernameParameter(<span class="string">&quot;myusername&quot;</span>)</span><br><span class="line">     .passwordParameter(<span class="string">&quot;mypassword&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义登录成功处理器"><a href="#自定义登录成功处理器" class="headerlink" title="自定义登录成功处理器"></a>自定义登录成功处理器</h3><p><strong>源码分析</strong></p>
+<p>使用successForwardUrl()时表示成功后转发请求到地址。内部是通过 successHandler() 方法进行 控制成功后交给哪个类进行处理</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907164437949.png" alt="image-20210907164437949" class="lazyload"></p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907164555496.png" alt="image-20210907164555496" class="lazyload"></p>
+<p>ForwardAuthenticationSuccessHandler内部就是最简单的请求转发。由于是请求转发，当遇到需要 跳转到站外或在前后端分离的项目中就无法使用了。</p>
+<p>当需要控制登录成功后去做一些事情时，可以进行自定义认证成功控制器。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.springsecurity.demo.handler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.User;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.authentication.AuthenticationSuccessHandler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAuthenticationSuccessHandler</span> <span class="keyword">implements</span> <span class="title">AuthenticationSuccessHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String url;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyAuthenticationSuccessHandler</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.url = url;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAuthenticationSuccess</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Authentication authentication)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">		System.out.println(request.getRemoteAddr());</span><br><span class="line"></span><br><span class="line">		User user = (User) authentication.getPrincipal();</span><br><span class="line">		System.out.println(user.getUsername());</span><br><span class="line">		<span class="comment">//输出null</span></span><br><span class="line">		System.out.println(user.getPassword());</span><br><span class="line">		System.out.println(user.getAuthorities());</span><br><span class="line">		response.sendRedirect(url);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改配置项</strong></p>
+<p>使用 successHandler()方法设置成功后交给哪个对象进行处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">http.formLogin()</span><br><span class="line">      <span class="comment">//自定义登录页面</span></span><br><span class="line">     .loginPage(<span class="string">&quot;/login.html&quot;</span>)</span><br><span class="line">      <span class="comment">//当发现/login时认为是登录，必须和表单提交的地址一样。去执行UserServiceImpl</span></span><br><span class="line">     .loginProcessingUrl(<span class="string">&quot;/login&quot;</span>)</span><br><span class="line">      <span class="comment">//登录成功后跳转页面，POST请求</span></span><br><span class="line">      <span class="comment">// .successForwardUrl(&quot;/toMain&quot;)</span></span><br><span class="line">      <span class="comment">//和successForwardUrl不能共存</span></span><br><span class="line">     .successHandler(<span class="keyword">new</span></span><br><span class="line">MyAuthenticationSuccessHandler(<span class="string">&quot;http://www.baidu.com&quot;</span>))</span><br><span class="line">      <span class="comment">//登录失败后跳转页面，POST请求</span></span><br><span class="line">     .failureForwardUrl(<span class="string">&quot;/toError&quot;</span>)</span><br><span class="line">     .usernameParameter(<span class="string">&quot;myusername&quot;</span>)</span><br><span class="line">     .passwordParameter(<span class="string">&quot;mypassword&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>自定义失败处理器也是一样的编写一个failureHandler()</p>
+<p>同样不能和failureForwardUrl共存</p>
+<h2 id="访问控制url匹配"><a href="#访问控制url匹配" class="headerlink" title="访问控制url匹配"></a>访问控制url匹配</h2><p>在前面讲解了认证中所有常用配置，主要是对 http.formLogin() 进行操作。而在配置类中 http.authorizeRequests() 主要是对url进行控制，也就是我们所说的授权（访问控制）。 http.authorizeRequests() 也支持连缀写法，总体公式为：</p>
+<ul>
+<li>url 匹配规则.权限控制方法</li>
+</ul>
+<p>通过上面的公式可以有很多 url 匹配规则和很多权限控制方法。这些内容进行各种组合就形成了 Spring Security中的授权。</p>
+<p>在所有匹配规则中取所有规则的交集。配置顺序影响了之后授权效果，越是具体的应该放在前面，越是笼统的应该放到后面。</p>
+<p><strong>anyRequest</strong>()</p>
+<p>在之前认证过程中我们就已经使用过 anyRequest()，表示匹配所有的请求。一般情况下此方法都会 使用设置全部内容都需要进行认证。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.anyRequest().authenticated();  </span><br></pre></td></tr></table></figure>
+
+<p><strong>antMatcher()</strong> </p>
+<p>方法定义如下 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> C <span class="title">antMatchers</span><span class="params">(String... antPatterns)</span>  </span></span><br></pre></td></tr></table></figure>
+
+<p>参数是不定向参数，每个参数是一个 ant 表达式，用于匹配 URL规则。 </p>
+<p>规则如下：</p>
+<ul>
+<li>? ： 匹配一个字符 </li>
+<li>*：匹配 0 个或多个字符 </li>
+<li>** ：匹配 0 个或多个目录   *</li>
+</ul>
+<p>在实际项目中经常需要放行所有静态资源，下面演示放行 js 文件夹下所有脚本文件。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.antMatchers(<span class="string">&quot;/js/**&quot;</span>,<span class="string">&quot;/css/**&quot;</span>).permitAll()  </span><br></pre></td></tr></table></figure>
+
+<p>还有一种配置方式是只要是.js 文件都放行 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.antMatchers(<span class="string">&quot;/**/*.js&quot;</span>).permitAll()</span><br></pre></td></tr></table></figure>
+
+<p><strong>regexMatchers</strong>() </p>
+<p>介绍 </p>
+<p>使用正则表达式进行匹配。和 antMatchers() 主要的区别就是参数， antMatchers() 参数是 ant 表达式， regexMatchers() 参数是正则表达式。 </p>
+<p>演示所有以.js 结尾的文件都被放行。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.regexMatchers( <span class="string">&quot;.+[.]js&quot;</span>).permitAll()</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>两个参数时使用方式</strong> </p>
+<p>​    无论是 antMatchers() 还是 regexMatchers() 都具有两个参数的方法，其中第一个参数都是 HttpMethod ，表示请求方式，当设置了 HttpMethod 后表示只有设定的特定的请求方式才执行对应的 权限设置。 </p>
+<p>枚举类型 HttpMethod 内置属性如下： </p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210907170931516.png" alt="image-20210907170931516" class="lazyload"></p>
+<p><strong>mvcMatchers()</strong></p>
+<p>mvcMatchers()适用于配置了 servletPath 的情况。</p>
+<p>servletPath 就是所有的 URL 的统一前缀。在 SpringBoot 整合SpringMVC 的项目中可以在application.properties 中添加下面内容设置 ServletPath。</p>
+<p>在 Spring Security 的配置类中配置 .servletPath() 是 mvcMatchers()返回值特有的方法， antMatchers()和 regexMatchers()没有这个方法。在 servletPath() 中配置了 servletPath 后， mvcMatchers()直接写 SpringMVC 中@RequestMapping()中设置的路径即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.mvcMatchers(<span class="string">&quot;/demo&quot;</span>).servletPath(<span class="string">&quot;/xxxx&quot;</span>).permitAll()</span><br></pre></td></tr></table></figure>
+
+<p>如果不习惯使用 mvcMatchers()也可以使用 antMatchers()，下面代码和上面代码是等效</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.antMatchers(<span class="string">&quot;/xxxx/demo&quot;</span>).permitAll()</span><br></pre></td></tr></table></figure>
+
+<h3 id="内置访问控制方法"><a href="#内置访问控制方法" class="headerlink" title="内置访问控制方法"></a><strong>内置访问控制方法</strong></h3><p>Spring Security 匹配了 URL 后调用了 permitAll() 表示不需要认证，随意访问。在 Spring Security中提供了多种内置控制。</p>
+<ul>
+<li>permitAll()    表示所匹配的 URL 任何人都允许访问。</li>
+<li>authenticated()   表示所匹配的 URL 都需要被认证才能访问。</li>
+<li>anonymous()   表示可以匿名访问匹配的URL。和permitAll()效果类似，只是设置为 anonymous()的 url会执行 filter 链中</li>
+<li>denyAll()  表示所匹配的 URL 都不允许被访问。</li>
+<li>rememberMe()   被“remember me”的用户允许访问</li>
+<li>fullyAuthenticated()   如果用户不是被 remember me 的，才可以访问。</li>
+</ul>
+<h3 id="角色权限判断"><a href="#角色权限判断" class="headerlink" title="角色权限判断"></a>角色权限判断</h3><p>除了之前讲解的内置权限控制。Spring Security 中还支持很多其他权限控制。这些方法一般都用于用户已经被认证后，判断用户是否具有特定的要求。</p>
+<ul>
+<li><p><strong>hasAuthority(String)</strong>  判断用户是否具有特定的权限，用户的权限是在自定义登录逻辑中创建 User 对象时指定的。其中admin和normal 就是用户的权限。admin和normal 严格区分大小写。</p>
+<p>即在userdetails中设置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> newUser(username,password,AuthorityUtils.commaSeparatedStringToAuthorityList(<span class="string">&quot;admin,normal&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>在配置类中通过 hasAuthority(“admin”)设置具有 admin 权限时才能访问。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.antMatchers(<span class="string">&quot;/main1.html&quot;</span>).hasAuthority(<span class="string">&quot;admin&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>hasAnyAuthority(String …)</strong>   如果用户具备给定权限中某一个，就允许访问。</p>
+<p>下面代码中由于大小写和用户的权限不相同，所以用户无权访问</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.antMatchers(<span class="string">&quot;/main1.html&quot;</span>).hasAnyAuthority(<span class="string">&quot;adMin&quot;</span>,<span class="string">&quot;admiN&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>hasRole(String)</strong></p>
+<p>如果用户具备给定角色就允许访问。否则出现 403。 参数取值来源于自定义登录逻辑 UserDetailsService 实现类中创建 User 对象时给 User 赋予的授 权。 在给用户赋予角色时角色需要以： ROLE_开头 ，后面添加角色名称。例如：ROLE_abc 其中 abc 是角 色名，ROLE_是固定的字符开头。 使用 hasRole()时参数也只写 abc 即可。否则启动报错。</p>
+<p>给用户赋予角色：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> User(username,password, AuthorityUtils.commaSeparatedStringToAuthorityList(<span class="string">&quot;admin,normal,ROLE_abc&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>在配置类中直接写 abc 即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.antMatchers(<span class="string">&quot;/main1.html&quot;</span>).hasRole(<span class="string">&quot;abc&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>hasAnyRole(String …)</strong>  如果用户具备给定角色的任意一个，就允许被访问</p>
+</li>
+<li><p><strong>hasIpAddress(String)</strong>  </p>
+<p>如果请求是指定的 IP 就运行访问。</p>
+<p>可以通过 request.getRemoteAddr() 获取 ip 地址。</p>
+<p>需要注意的是在本机进行测试时 localhost 和 127.0.0.1 输出的 ip地址是不一样的。</p>
+<p>localhost打印出的是：0:0:0:0:0:0:0:1</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.antMatchers(<span class="string">&quot;/main1.html&quot;</span>).hasIpAddress(<span class="string">&quot;127.0.0.1&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="基于表达式的访问控制"><a href="#基于表达式的访问控制" class="headerlink" title="基于表达式的访问控制"></a>基于表达式的访问控制</h2><h3 id="access-方法使用"><a href="#access-方法使用" class="headerlink" title="access()方法使用"></a>access()方法使用</h3><p>之前学习的登录用户权限判断实际上底层实现都是调用access(表达式)</p>
+<p>可以通过 access() 实现和之前学习的权限控制完成相同的功能。</p>
+<p>以 hasRole 和 和 permitAll 举例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.antMatchers(<span class="string">&quot;/showLogin&quot;</span>).access(<span class="string">&quot;permitAll&quot;</span>)</span><br><span class="line">.antMatchers(<span class="string">&quot;/main1.html&quot;</span>).access(<span class="string">&quot;hasRole(&#x27;abc&#x27;)&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用自定义方法"><a href="#使用自定义方法" class="headerlink" title="使用自定义方法"></a>使用自定义方法</h3><p>虽然这里面已经包含了很多的表达式(方法)但是在实际项目中很有可能出现需要自己自定义逻辑的情况。</p>
+<p>判断登录用户是否具有访问当前 URL 权限。</p>
+<p><strong>新建接口及实现类</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.springsecurity.demo.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.Authentication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.GrantedAuthority;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.authority.SimpleGrantedAuthority;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zhoubin</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.0.0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServiceImpl</span> <span class="keyword">implements</span> <span class="title">MyService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPermission</span><span class="params">(HttpServletRequest request, Authentication authentication)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//获取主体</span></span><br><span class="line">		Object obj = authentication.getPrincipal();</span><br><span class="line">		<span class="comment">//判断主体是否属于UserDetails</span></span><br><span class="line">		<span class="keyword">if</span> (obj <span class="keyword">instanceof</span> UserDetails)&#123;</span><br><span class="line">			<span class="comment">//获取权限</span></span><br><span class="line">			UserDetails userDetails = (UserDetails) obj;</span><br><span class="line">			Collection&lt;? extends GrantedAuthority&gt; authorities = userDetails.getAuthorities();</span><br><span class="line">			<span class="comment">//判断请求的URI是否在权限里</span></span><br><span class="line">			<span class="keyword">return</span> authorities.contains(<span class="keyword">new</span> SimpleGrantedAuthority(request.getRequestURI()));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改配置类</strong></p>
+<p>在 access 中通过@bean的id名.方法(参数)的形式进行调用配置类中修改如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//url拦截</span></span><br><span class="line">http.authorizeRequests()</span><br><span class="line">      <span class="comment">//login.html不需要被认证</span></span><br><span class="line">  <span class="comment">// .antMatchers(&quot;/login.html&quot;).permitAll()</span></span><br><span class="line">     .antMatchers(<span class="string">&quot;/login.html&quot;</span>).access(<span class="string">&quot;permitAll&quot;</span>)</span><br><span class="line">      <span class="comment">// .antMatchers(&quot;/main.html&quot;).hasRole(&quot;abc&quot;)</span></span><br><span class="line">     .antMatchers(<span class="string">&quot;/main.html&quot;</span>).access(<span class="string">&quot;hasRole(&#x27;abc&#x27;)&quot;</span>)</span><br><span class="line">     </span><br><span class="line">.anyRequest().access(<span class="string">&quot;@myServiceImpl.hasPermission(request,authentication)&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于注解的访问控制"><a href="#基于注解的访问控制" class="headerlink" title="基于注解的访问控制"></a>基于注解的访问控制</h3><p>在 Spring Security 中提供了一些访问控制的注解。这些注解都是默认是都不可用的，需要通过@EnableGlobalMethodSecurity 进行开启后使用。</p>
+<p>如果设置的条件允许，程序正常执行。如果不允许会报 500</p>
+<p>这些注解可以写到 Service 接口或方法上，也可以写到 Controller或 Controller 的方法上。通常情况下 都是写在控制器方法上的，控制接口URL是否允许被访问。  </p>
+<p><strong>开启注解</strong> </p>
+<p>在 启 动 类 ( 也 可 以 在 配 置 类 等 能 够 扫 描 的 类 上 ) 上 添 加 @EnableGlobalMethodSecurity(securedEnabled = true) </p>
+<p>在控制器方法上添加@Secured等 注解</p>
+<p><strong>@Secured</strong> </p>
+<p>@Secured 是专门用于判断是否具有角色的。能写在方法或类上。参数要以 ROLE_开头。</p>
+<p><strong>@PreAuthorize/@PostAuthorize</strong></p>
+<p>@PreAuthorize 和@PostAuthorize 都是方法或类级别注解。</p>
+<ul>
+<li><p>@PreAuthorize 表示访问方法或类在执行之前先判断权限，大多情况下都是使用这个注解，注解的参数和access()方法参数取值相同，都是权限表达式。</p>
+</li>
+<li><p>@PostAuthorize 表示方法或类执行结束后判断权限，此注解很少被使用到。</p>
+</li>
+</ul>
+<h2 id="RememberMe功能实现"><a href="#RememberMe功能实现" class="headerlink" title="RememberMe功能实现"></a>RememberMe功能实现</h2><p>Spring Security 中 Remember Me 为“记住我”功能，用户只需要在登录时添加 remember-me复选框，取值为true。Spring Security 会自动把用户信息存储到数据源中，以后就可以不登录进行访问。</p>
+<p><strong>添加依赖</strong></p>
+<p>Spring Security 实 现 Remember Me 功 能 时 底 层 实 现 依 赖Spring-JDBC，所以需要导入 SpringJDBC。以后多使用 MyBatis 框架而很少直接导入 spring-jdbc，所以此处导入 mybatis 启动器同时还需 要添加 MySQL 驱动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- mybatis 依赖 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">   &lt;version&gt;2.1.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- mysql 数据库依赖 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">   &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">   &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">   &lt;version&gt;8.0.18&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>配置数据源</strong></p>
+<p>在 application.properties 中配置数据源。请确保数据库中已经存在shop数据库</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.datasource.driver-class-name</span>= <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="meta">spring.datasource.url</span>= <span class="string">jdbc:mysql://localhost:3306/security?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=Asia/Shanghai</span></span><br><span class="line"><span class="meta">spring.datasource.username</span>= <span class="string">root</span></span><br><span class="line"><span class="meta">spring.datasource.password</span>= <span class="string">root</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>编写配置</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RememberMeConfig</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Autowired</span></span><br><span class="line">   <span class="keyword">private</span> DataSource dataSource;</span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> PersistentTokenRepository <span class="title">getPersistentTokenRepository</span><span class="params">()</span></span>&#123;</span><br><span class="line">      JdbcTokenRepositoryImpl jdbcTokenRepository = <span class="keyword">new</span></span><br><span class="line">JdbcTokenRepositoryImpl();</span><br><span class="line">      jdbcTokenRepository.setDataSource(dataSource);</span><br><span class="line">      <span class="comment">//自动建表，第一次启动时需要，第二次启动时注释掉</span></span><br><span class="line">      jdbcTokenRepository.setCreateTableOnStartup(<span class="keyword">true</span>);</span><br><span class="line">      <span class="keyword">return</span> jdbcTokenRepository;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//记住我</span></span><br><span class="line">		http.rememberMe()</span><br><span class="line">				<span class="comment">//设置数据源</span></span><br><span class="line">				.tokenRepository(persistentTokenRepository)</span><br><span class="line">				<span class="comment">// .rememberMeParameter()</span></span><br><span class="line">				<span class="comment">//超时时间</span></span><br><span class="line">				.tokenValiditySeconds(<span class="number">60</span>)</span><br><span class="line">				<span class="comment">//自定义登录逻辑</span></span><br><span class="line">				.userDetailsService(userDetailService);</span><br></pre></td></tr></table></figure>
+
+<p><strong>有效时间</strong></p>
+<p>默认情况下重启项目后登录状态失效了。但是可以通过设置状态有效时间，即使项目重新启动下次也可以正常登录。</p>
+<h2 id="退出登录"><a href="#退出登录" class="headerlink" title="退出登录"></a>退出登录</h2><p>用户只需要向 Spring Security 项目中发送 /logout 退出请求即可。</p>
+<p>实现退出非常简单，只要在页面中添加 /logout 的超链接即可。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/logout&quot;</span>&gt;</span>退出登录<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为了实现更好的效果，通常添加退出的配置。默认的退出 url 为 /logout ，退出成功后跳转到 /login?login</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210908190551312.png" alt="image-20210908190551312" class="lazyload"></p>
+<p>如果不希望使用默认值，可以通过下面的方法进行修改。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//退出</span></span><br><span class="line">		http.logout()</span><br><span class="line">				.logoutUrl(<span class="string">&quot;/logout&quot;</span>)</span><br><span class="line">				<span class="comment">//退出成功后跳转的页面</span></span><br><span class="line">				.logoutSuccessUrl(<span class="string">&quot;/login.html&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="logout其他常用配置源码解读"><a href="#logout其他常用配置源码解读" class="headerlink" title="logout其他常用配置源码解读"></a><strong>logout其他常用配置源码解读</strong></h3><p><strong>clearAuthentication(boolean)</strong></p>
+<p>是否清除认证状态，默认为 true</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210908191430170.png" alt="image-20210908191430170" class="lazyload"></p>
+<p><strong>invalidateHttpSession(boolean)</strong></p>
+<p>是否销毁 HttpSession 对象，默认为 true</p>
+<p>具体看上图</p>
+<p><strong>logoutSuccessHandler(LogoutSuccessHandler)</strong></p>
+<p>退出成功处理器</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210908191638916.png" alt="image-20210908191638916" class="lazyload"></p>
+<p>也可以自己进行定义退出成功处理器。只要实现了 LogoutSuccessHandler 接口。与之前讲解的登录 成功处理器和登录失败处理器极其类似。</p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>Author：</strong>VioletEverGarden<br>
+        <strong>Link：</strong><a href="http://violetevgaden.github.io/posts/98c0a732.html" title="http:&#x2F;&#x2F;violetevgaden.github.io&#x2F;posts&#x2F;98c0a732.html" target="_blank" rel="noopener">http:&#x2F;&#x2F;violetevgaden.github.io&#x2F;posts&#x2F;98c0a732.html</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Java/" rel="tag">Java</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/spring-security/" rel="tag">spring security</a>
+    
+</div>
+
+  
+      <div class="nexmoe-post-footer">
+          <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: '9c68004b717aa2fca18d',
+        clientSecret: '37806f775f54e65c1e1712bbc3bdd474f4016759',
+        id: window.location.pathname,
+        repo: 'VioletEvGaden.github.io',
+        owner: 'VioletEvGaden',
+        admin: 'VioletEvGaden'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+      </div>
+  
+</div>
+            <div class="nexmoe-post-right">
+              <div class="nexmoe-fixed">
+                  <div class="nexmoe-tool"> 
+                    
+                      
+                        
+                          
+                          
+                              <button class="mdui-fab catalog" style="overflow:unset;">
+                                  <i class="nexmoefont icon-i-catalog"></i>
+                                  <div class="nexmoe-toc">
+                                      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringSecruity%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">SpringSecruity简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">2.</span> <span class="toc-text">快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E4%BE%9D%E8%B5%96"><span class="toc-number">2.1.</span> <span class="toc-text">导入依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E5%89%8D%E7%AB%AF%E9%A1%B5%E9%9D%A2login-html"><span class="toc-number">2.2.</span> <span class="toc-text">编写前端页面login.html</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E9%A1%B5%E9%9D%A2"><span class="toc-number">2.3.</span> <span class="toc-text">访问页面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#UserDetailsService%E8%AF%A6%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">UserDetailsService详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="toc-number">3.1.</span> <span class="toc-text">返回值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">方法参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8"><span class="toc-number">3.3.</span> <span class="toc-text">异常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PasswordEncoder-%E5%AF%86%E7%A0%81%E8%A7%A3%E6%9E%90%E5%99%A8%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.</span> <span class="toc-text">PasswordEncoder 密码解析器详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.1.</span> <span class="toc-text">接口介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E8%A7%A3%E6%9E%90%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.2.</span> <span class="toc-text">内置解析器介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BCryptPasswordEncoder-%E7%AE%80%E4%BB%8B"><span class="toc-number">4.3.</span> <span class="toc-text">BCryptPasswordEncoder 简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%99%BB%E5%BD%95"><span class="toc-number">5.</span> <span class="toc-text">自定义登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%80%BB%E8%BE%91"><span class="toc-number">5.1.</span> <span class="toc-text">自定义逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2"><span class="toc-number">5.2.</span> <span class="toc-text">自定义登录页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A4%E8%AF%81%E8%BF%87%E7%A8%8B%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">5.3.</span> <span class="toc-text">认证过程其他常用配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E8%AF%B7%E6%B1%82%E8%B4%A6%E6%88%B7%E5%92%8C%E5%AF%86%E7%A0%81%E7%9A%84%E5%8F%82%E6%95%B0%E5%90%8D"><span class="toc-number">5.4.</span> <span class="toc-text">设置请求账户和密码的参数名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%99%BB%E5%BD%95%E6%88%90%E5%8A%9F%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-number">5.5.</span> <span class="toc-text">自定义登录成功处理器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6url%E5%8C%B9%E9%85%8D"><span class="toc-number">6.</span> <span class="toc-text">访问控制url匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%96%B9%E6%B3%95"><span class="toc-number">6.1.</span> <span class="toc-text">内置访问控制方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E8%89%B2%E6%9D%83%E9%99%90%E5%88%A4%E6%96%AD"><span class="toc-number">6.2.</span> <span class="toc-text">角色权限判断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">7.</span> <span class="toc-text">基于表达式的访问控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#access-%E6%96%B9%E6%B3%95%E4%BD%BF%E7%94%A8"><span class="toc-number">7.1.</span> <span class="toc-text">access()方法使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E6%96%B9%E6%B3%95"><span class="toc-number">7.2.</span> <span class="toc-text">使用自定义方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="toc-number">7.3.</span> <span class="toc-text">基于注解的访问控制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RememberMe%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="toc-number">8.</span> <span class="toc-text">RememberMe功能实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%80%E5%87%BA%E7%99%BB%E5%BD%95"><span class="toc-number">9.</span> <span class="toc-text">退出登录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#logout%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="toc-number">9.1.</span> <span class="toc-text">logout其他常用配置源码解读</span></a></li></ol></li></ol>
+                                  </div>
+                              </button>
+                          
+                          
+                      
+                    
+                      <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+ 
+
+<script async src="/js/app.js?v=1634106732606"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+
+    
+
+
+
+
+
+</body>
+
+</html>
