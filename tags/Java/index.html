@@ -21,9 +21,9 @@
 <meta property="article:author" content="VioletEverGarden">
 <meta name="twitter:card" content="summary">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css,npm/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,npm/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css?v=233" crossorigin>
-    <link rel="stylesheet" href="/css/style.css?v=1634133188577">
+    <link rel="stylesheet" href="/css/style.css?v=1634376536125">
     
-    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1634133188577">
+    <link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1634376536125">
 <meta name="generator" content="Hexo 5.4.0"></head>
 
 <body class="mdui-drawer-body-left">
@@ -47,8 +47,8 @@
         </a>
     </div>
     <div class="nexmoe-count">
-         <div class="nexmoe-count-item"><span>文章</span>14 <div class="item-radius"></div><div class="item-radius item-right"></div> </div>
-        <div class="nexmoe-count-item"><span>标签</span>9<div class="item-radius"></div><div class="item-radius item-right"></div></div>
+         <div class="nexmoe-count-item"><span>文章</span>16 <div class="item-radius"></div><div class="item-radius item-right"></div> </div>
+        <div class="nexmoe-count-item"><span>标签</span>10<div class="item-radius"></div><div class="item-radius item-right"></div></div>
         <div class="nexmoe-count-item"><span>分类</span>1<div class="item-radius"></div><div class="item-radius item-right"></div></div>
     </div>
     <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
@@ -111,7 +111,7 @@
     
   <div class="nexmoe-widget-wrap">
     <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
-      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Mybatis/" style="font-size: 15px;">Mybatis</a> <a href="/tags/Mybatis-Plus/" style="font-size: 10px;">Mybatis-Plus</a> <a href="/tags/Nosql/" style="font-size: 10px;">Nosql</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 12.5px;">SpringBoot</a> <a href="/tags/spring-security/" style="font-size: 12.5px;">spring security</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a>
+      <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Mybatis/" style="font-size: 15px;">Mybatis</a> <a href="/tags/Mybatis-Plus/" style="font-size: 10px;">Mybatis-Plus</a> <a href="/tags/Nosql/" style="font-size: 10px;">Nosql</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 12.5px;">SpringBoot</a> <a href="/tags/spring-security/" style="font-size: 12.5px;">spring security</a> <a href="/tags/swagger/" style="font-size: 10px;">swagger</a> <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="font-size: 10px;">微服务</a>
     </div>
     
   </div>
@@ -133,7 +133,7 @@
 
         <li class="category-list-item">
           <a class="category-list-link" href="/categories/后端/">后端</a>
-          <span class="category-list-count">14</span>
+          <span class="category-list-count">15</span>
         </li>
 
         
@@ -165,6 +165,111 @@
     <div id="nexmoe-content">
         <div class="nexmoe-primary">
             <section class="nexmoe-posts">
+    
+    <div class="nexmoe-post">
+        <a href="/posts/e8256115.html">
+            
+                <div class="nexmoe-post-cover mdui-ripple" style="padding-bottom: 41.66666666666667%;"> 
+                    <img data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/211016.jpeg" data-sizes="auto" alt="swagger-在spring中整合" class="lazyload">
+                    <h1>swagger-在spring中整合</h1>
+                </div>
+            
+        </a>
+
+        <div class="nexmoe-post-meta nexmoe-rainbow">
+            <a><i class="nexmoefont icon-calendar-fill"></i>2021年10月16日</a>
+            <a><i class="nexmoefont icon-areachart"></i>1.2k 字</a>
+            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 4 分钟</a>
+        </div>
+
+        <article>
+            
+                <h1 id="微服务的简单介绍和示例"><a href="#微服务的简单介绍和示例" class="headerlink" title="微服务的简单介绍和示例"></a>微服务的简单介绍和示例</h1><h2 id="单体架构"><a href="#单体架构" class="headerlink" title="单体架构"></a>单体架构</h2><p><strong>单体架构</strong>：将业务的所有功能集中在一个项目中开发，打成一个包部署。</p>
+<p>如图：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20211016104520918.png" alt="image-20211016104520918" class="lazyload"></p>
+<p><strong>优点：</strong>架构简单，部署成本低</p>
+<p><strong>缺点：</strong>耦合度高（因为代码都在一个项目中，一个地方发生变动，有关的包中的代码都要变动，所以维护困难、升级困难）</p>
+<h2 id="分布式架构"><a href="#分布式架构" class="headerlink" title="分布式架构"></a>分布式架构</h2><p><strong>分布式架构</strong>：根据业务功能对系统做拆分，每个业务功能模块作为独立项目开发，称为一个服务。</p>
+<p>如图：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20211016104858955.png" alt="image-20211016104858955" class="lazyload"></p>
+<p><strong>优点：</strong>降低服务耦合，有利于服务升级和拓展</p>
+<p><strong>缺点：</strong>服务调用关系错综复杂</p>
+<p>分布式架构虽然降低了服务耦合，但是服务拆分时也有很多问题需要思考：</p>
+<ul>
+<li>服务拆分的粒度如何界定？</li>
+<li>服务之间如何调用？</li>
+<li>服务的调用关系如何管理？</li>
+</ul>
+<p>人们需要制定一套行之有效的<strong>标准</strong>来约束分布式架构。</p>
+<h2 id="SpringCloud"><a href="#SpringCloud" class="headerlink" title="SpringCloud"></a>SpringCloud</h2><p>SpringCloud是目前国内使用最广泛的微服务框架。官网地址：<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-cloud%E3%80%82">https://spring.io/projects/spring-cloud。</a></p>
+<p>SpringCloud集成了各种微服务功能组件，并基于SpringBoot实现了这些组件的自动装配，从而提供了良好的开箱即用体验。</p>
+<p>其中常见的组件包括：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20211016105205368.png" alt="image-20211016105205368" class="lazyload"></p>
+<p>其中的常用的一些组件将会在后续介绍。</p>
+<p>另外，SpringCloud底层是依赖于SpringBoot的，并且有版本的兼容关系，如下：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20210713205003790.png" alt="image-20210713205003790" class="lazyload"></p>
+<h2 id="服务拆分和远程调用"><a href="#服务拆分和远程调用" class="headerlink" title="服务拆分和远程调用"></a>服务拆分和远程调用</h2><p><strong>任何分布式架构都离不开服务的拆分，微服务也是一样。</strong></p>
+<p><strong>案例源码</strong>：<a target="_blank" rel="noopener" href="https://github.com/VioletEvGaden/cloudstudy">https://github.com/VioletEvGaden/cloudstudy</a></p>
+<h3 id="服务拆分原则"><a href="#服务拆分原则" class="headerlink" title="服务拆分原则"></a>服务拆分原则</h3><p>这里我总结了微服务拆分时的几个原则：</p>
+<ul>
+<li>不同微服务，不要重复开发相同业务</li>
+<li>微服务数据独立，不要访问其它微服务的数据库</li>
+<li>微服务可以将自己的业务暴露为接口，供其它微服务调用</li>
+</ul>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20211016110738270.png" alt="image-20211016110738270" class="lazyload"></p>
+<h3 id="服务拆分示例"><a href="#服务拆分示例" class="headerlink" title="服务拆分示例"></a>服务拆分示例</h3><p>以案例源码中cloud-demo结构如下：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20211016111037223.png" alt="image-20211016111037223" class="lazyload"></p>
+<p>cloud-demo：父工程，管理依赖</p>
+<ul>
+<li>order-service：订单微服务，负责订单相关业务</li>
+<li>user-service：用户微服务，负责用户相关业务</li>
+</ul>
+<p>要求：</p>
+<ul>
+<li>订单微服务和用户微服务都必须有各自的数据库，相互独立</li>
+<li>订单服务和用户服务<strong>都对外暴露Restful</strong>的接口</li>
+<li>订单服务如果需要查询用户信息，只能<strong>调用用户服务的Restful</strong>接口，不能查询用户数据库</li>
+</ul>
+<p>打开后idea右下角有一个弹窗</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20211016111224536.png" alt="image-20211016111224536" class="lazyload"></p>
+<p>点击显示运行配置后</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/image-20211016111306139.png" alt="image-20211016111306139" class="lazyload"></p>
+<p>这样就可以很方便的启动和停止多个服务</p>
+<h3 id="远程调用"><a href="#远程调用" class="headerlink" title="远程调用"></a>远程调用</h3><p>在order-service服务中，有一个根据id查询订单的接口：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="C:\Users\MSI-NB\Desktop\springcloud资料\day01-SpringCloud01\讲义\assets\image-20210713212749575.png" alt="image-20210713212749575" class="lazyload"></p>
+<p>根据id查询订单，返回值是Order对象，如图：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="C:\Users\MSI-NB\Desktop\springcloud资料\day01-SpringCloud01\讲义\assets\image-20210713212901725.png" alt="image-20210713212901725" class="lazyload"></p>
+<p>其中的user为null</p>
+<p>在user-service中有一个根据id查询用户的接口：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="C:\Users\MSI-NB\Desktop\springcloud资料\day01-SpringCloud01\讲义\assets\image-20210713213146089.png" alt="image-20210713213146089" class="lazyload"></p>
+<p>查询的结果如图：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="C:\Users\MSI-NB\Desktop\springcloud资料\day01-SpringCloud01\讲义\assets\image-20210713213213075.png" alt="image-20210713213213075" class="lazyload"></p>
+<h4 id="远程调用案例："><a href="#远程调用案例：" class="headerlink" title="远程调用案例："></a>远程调用案例：</h4><p>修改order-service中的根据id查询订单业务，要求在查询订单的同时，根据订单中包含的userId查询出用户信息，一起返回。</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="C:\Users\MSI-NB\Desktop\springcloud资料\day01-SpringCloud01\讲义\assets\image-20210713213312278.png" alt="image-20210713213312278" class="lazyload"></p>
+<p>因此，我们需要在order-service中 向user-service发起一个http的请求，调用<a target="_blank" rel="noopener" href="http://localhost:8081/user/%7BuserId%7D%E8%BF%99%E4%B8%AA%E6%8E%A5%E5%8F%A3%E3%80%82">http://localhost:8081/user/{userId}这个接口。</a></p>
+<p>这样就能查到user信息，并放到order对象中返回</p>
+<p>因此我们需要知道 controller层如何去发送 http 请求，Spring 提供了一个 RestTemplate 工具，只需要把它创建出来即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> RestTemplate <span class="title">restTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>修改order-service服务中的cn.zh.order.service包下的OrderService类中的queryOrderById方法：</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="C:\Users\MSI-NB\Desktop\springcloud资料\day01-SpringCloud01\讲义\assets\image-20210713213959569.png" alt="image-20210713213959569" class="lazyload"></p>
+<p>启动完成后，访问：<a target="_blank" rel="noopener" href="http://localhost/">http://localhost</a>:8080/order/101即可看到返回的order对象中包含了user</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blogimg/blogimg1/20210901090909.png" alt="img" class="lazyload"></p>
+<h2 id="提供者与消费者"><a href="#提供者与消费者" class="headerlink" title="提供者与消费者"></a>提供者与消费者</h2><p>在服务调用关系中，会有两个不同的角色：</p>
+<p><strong>服务提供者</strong>：一次业务中，被其它微服务调用的服务。（提供接口给其它微服务）</p>
+<p><strong>服务消费者</strong>：一次业务中，调用其它微服务的服务。（调用其它微服务提供的接口）</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="C:\Users\MSI-NB\Desktop\springcloud资料\day01-SpringCloud01\讲义\assets\image-20210713214404481.png" alt="image-20210713214404481" class="lazyload"></p>
+<p>但是，服务提供者与服务消费者的角色并不是绝对的，而是相对于业务而言。</p>
+<p>如果服务A调用了服务B，而服务B又调用了服务C，服务B的角色是什么？</p>
+<ul>
+<li>对于A调用B的业务而言：A是服务消费者，B是服务提供者</li>
+<li>对于B调用C的业务而言：B是服务消费者，C是服务提供者</li>
+</ul>
+<p>因此，服务B既可以是服务提供者，也可以是服务消费者。</p>
+
+            
+        </article>
+    </div>
     
     <div class="nexmoe-post">
         <a href="/posts/e8256115.html">
@@ -373,29 +478,6 @@
         </article>
     </div>
     
-    <div class="nexmoe-post">
-        <a href="/posts/9853eaf7.html">
-            
-                <div class="nexmoe-post-cover mdui-ripple" style="padding-bottom: 41.66666666666667%;"> 
-                    <img data-src="https://gitee.com/huzhang-youren/imgupload/raw/master/blog/IMG_20210220_165621.jpg" data-sizes="auto" alt="SSM学习第五天" class="lazyload">
-                    <h1>SSM学习第五天</h1>
-                </div>
-            
-        </a>
-
-        <div class="nexmoe-post-meta nexmoe-rainbow">
-            <a><i class="nexmoefont icon-calendar-fill"></i>2021年07月18日</a>
-            <a><i class="nexmoefont icon-areachart"></i>4.4k 字</a>
-            <a><i class="nexmoefont icon-time-circle-fill"></i>大概 21 分钟</a>
-        </div>
-
-        <article>
-            
-                <p>Mybatis的初步使用</p>
-            
-        </article>
-    </div>
-    
 </section>
 
     <nav class="nexmoe-page-nav">
@@ -425,7 +507,7 @@
 
  
 
-<script async src="/js/app.js?v=1634133188578"></script>
+<script async src="/js/app.js?v=1634376536126"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
 <script>
