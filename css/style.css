@@ -859,11 +859,11 @@ body {
   flex: none;
   width: 60px;
   padding: 5px 0;
-  background-color: #e67249;
+  background-color: #ae8e7e;
   transform: rotate(0deg);
   border-radius: 50%;
   color: #fff;
-  box-shadow: 0 2px 12px #e67249;
+  box-shadow: 0 2px 12px #ae8e7e;
   position: relative;
 }
 #nexmoe-header .nexmoe-count .nexmoe-count-item .item-radius {
@@ -873,7 +873,7 @@ body {
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: #e67249;
+  background-color: #ae8e7e;
 }
 #nexmoe-header .nexmoe-count .nexmoe-count-item .item-right {
   left: auto;
@@ -912,7 +912,7 @@ body {
 }
 #nexmoe-header .nexmoe-list .nexmoe-list-item {
   padding: 0 36px;
-  color: #9ca2a8;
+  color: #cdc0da;
   border-radius: 13px;
   margin-bottom: 10px;
   text-align: center;
@@ -928,7 +928,7 @@ body {
 }
 #nexmoe-header .nexmoe-list .nexmoe-list-item i {
   font-size: 22px;
-  color: #9ca2a8;
+  color: #cdc0da;
 }
 #nexmoe-header .nexmoe-list .nexmoe-list-item .mdui-list-item-content {
   margin-left: 0px;
